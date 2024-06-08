@@ -2,7 +2,7 @@ terraform {
   cloud {
     organization = "mymadlab"
     workspaces {
-      tags = ["facility", "infra", "facility_infra_module"]
+      tags = ["facility", "infra", "facility_infra_modules_00"]
     }
   }
   required_providers {
