@@ -1,0 +1,52 @@
+# To execute this pipeline, shell something like:
+# pypyr echo text goes here
+context_parser: pypyr.parser.string
+steps:
+  - pypyr.steps.configvars
+  - name: pypyr.steps.pyimport
+    comment: import python modules
+    in:
+      pyImport: import os
+  - name: pypyr.steps.set
+    comment: show how to use set to assign variables of different types
+    in:
+      set:
+        modulename: !py argString.split('-')[1]
+  - name: pypyr.steps.shell
+    comment: Remove old zip files
+    in:
+      cmd:
+        run: rm -f ./modules/*.zip
+  - name: pypyr.steps.cmd
+    comment: Delete if module already exists
+    skip: !py "os.path.isdir('./modules/{modulename}')"
+    in:
+      cmd:
+        run: 'rm -Rf ./modules/{modulename}'
+  - name: pypyr.steps.cmd
+    comment: Create modules directory if it does not exist
+    skip: !py "os.path.isdir('./modules')"
+    in:
+      cmd:
+        run: mkdir ./modules
+  - name: pypyr.steps.cmd
+    comment: Download Module
+    in:
+      cmd:
+        run: curl -kvL -o ./modules/{argString}.zip https://{gitfqdn}/{gitorg}/terraform-{argString}/archive/refs/heads/main.zip
+  - name: pypyr.steps.shell
+    comment: Unzip file
+    in:
+      cmd:
+        run: 'unzip {argString}'
+        cwd: './modules/'
+  - name: pypyr.steps.shell
+    comment: Rename module directory
+    in:
+      cmd:
+        run: 'mv ./modules/terraform-{argString}-main/ ./modules/{modulename}/'
+  - name: pypyr.steps.shell
+    comment: Remove zip file
+    in:
+      cmd:
+        run: 'rm -f ./modules/{argString}.zip'
