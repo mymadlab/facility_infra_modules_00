@@ -1,6 +1,6 @@
 module "terraform_<provider>_mml_<name>" {
   source  = "app.terraform.io/mymadlab/mml_module_builder/tfe"
-  version = "~> 0.1.0"
+  version = "~>0.2.0"
 
   name = join("-",["terraform-<provider>", "mml_<name>"])
   description = "<description>"
