@@ -1,6 +1,6 @@
 module "terraform_tfe_mml_module_builder" {
   source  = "app.terraform.io/mymadlab/mml_module_builder/tfe"
-  version = "~> 0.1.0"
+  version = "~>0.2.0"
 
   name              = join("-", ["terraform-tfe", "mml_module_builder"])
   description       = "Responsible for building terraform modules"
@@ -8,4 +8,9 @@ module "terraform_tfe_mml_module_builder" {
   github_org        = var.github_org
   vcs_provider_name = var.vcs_provider_name
 
+}
+
+import {
+  to = module.terraform_tfe_mml_module_builder.module.github_repository_manager.github_branch_protection.main
+  id = "terraform-tfe-mml_module_builder:main"
 }

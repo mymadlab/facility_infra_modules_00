@@ -1,7 +1,6 @@
 module "terraform_github_mml_repository_manager" {
-#  source  = "app.terraform.io/mymadlab/mml_module_builder/tfe"
-#  version = "~> 0.1.0"
-  source  = "./modules/mml_module_builder"
+  source  = "app.terraform.io/mymadlab/mml_module_builder/tfe"
+  version = "~>0.2.0"
 
   name              = join("-", ["terraform-github", "mml_repository_manager"])
   description       = "Workspace for managing Github repositories"
