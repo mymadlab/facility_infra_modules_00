@@ -9,8 +9,3 @@ module "terraform_github_mml_repository_manager" {
   vcs_provider_name = var.vcs_provider_name
 
 }
-
-import {
-  to = module.terraform_github_mml_repository_manager.module.github_repository_manager.github_branch_protection.main
-  id = "terraform-github-mml_repository_manager:main"
-}
